@@ -988,12 +988,17 @@ remove_all_containers() {
 
     for container in $("${SNAP}/microk8s-ctr.wrapper" containers ls | $SNAP/bin/sed -n '1!p' | $SNAP/usr/bin/gawk '{print $1}')
     do
-        "${SNAP}/microk8s-ctr.wrapper" container delete --force $container &>/dev/null || true
+        "${SNAP}/microk8s-ctr.wrapper" container delete $container &>/dev/null || true
     done
 }
 
 get_container_shim_pids() {
     $SNAP/bin/ps -e -o pid= -o args= | $SNAP/bin/grep -v 'grep' | $SNAP/bin/sed -e 's/^ *//; s/\s\s*/\t/;' | $SNAP/bin/grep -w '/snap/microk8s/.*/bin/containerd-shim' | $SNAP/usr/bin/cut -f1
+}
+
+kill_all_container_shims() {
+  run_with_sudo systemctl kill snap.microk8s.daemon-kubelite.service --signal=SIGKILL &>/dev/null || true
+  run_with_sudo systemctl kill snap.microk8s.daemon-containerd.service --signal=SIGKILL &>/dev/null || true
 }
 
 is_first_boot() {
