@@ -55,6 +55,7 @@ then
     exit 1
 else
     remove_all_containers
+    kill_all_container_shims
     $prefix_cmd stop microk8s --disable
     run_with_sudo touch ${SNAP_DATA}/var/lock/stopped.lock
 fi

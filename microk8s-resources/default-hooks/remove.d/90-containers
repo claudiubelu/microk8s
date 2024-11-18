@@ -3,3 +3,4 @@
 . "${SNAP}/actions/common/utils.sh"
 
 remove_all_containers
+kill_all_container_shims
