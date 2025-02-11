@@ -52,5 +52,3 @@ jobs:
             Backport of #${pull_number} to `${target_branch}`.
           pull_title: >-
             [Backport ${target_branch}] ${pull_title}
-          # Branches to backport to.
-          target_branches: "1.32 1.31"
